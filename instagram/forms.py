@@ -13,8 +13,8 @@ class ProfileForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['Name'].widget=forms.TextInput()
     class Meta:
-        model = Profile
-        fields = ('Name','profile_picture','bio' )
+        model = profile
+        fields = ('user','profile_photo','bio' )
 
 
 class CommentForm(forms.ModelForm):

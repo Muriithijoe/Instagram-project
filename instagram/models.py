@@ -26,5 +26,9 @@ class Post(models.Model):
     image_caption = HTMLField(max_length = 200)
     profile = models.ForeignKey(User,on_delete = models.CASCADE, null = True)
     likes = models.IntegerField()
-    comment = models.TextField(max_length = 200)
     photo_date = models.DateTimeField(auto_now_add=True, null = True)
+
+class Comment(models.Model):
+    text = models.TextField()
+    photo = models.ForeignKey(Post, related_name='comments')
+    user = models.ForeignKey(profile, related_name='comments')
