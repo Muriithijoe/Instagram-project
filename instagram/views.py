@@ -10,3 +10,8 @@ def post(request,post_id):
     except DoesNotExist:
         raise Http404()
     return render(request,"post.html", {"post":post})
+
+@login_required(login_url='/accounts/login/')
+def find(request, name):
+    results = Profile.find_profile(name)
+    return render(request, 'searchresults.html', locals())
