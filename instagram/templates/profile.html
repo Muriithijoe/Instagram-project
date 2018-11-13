@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% load bootstrap4 %}
+{% load bootstrap3 %}
 {% load utils %}
 {% block content %}
 <div class="row userbody">
     <div id="userdetails" class="row col-12 mb-2">
         <div class="col-sm-4">
-            <img src="{{user_object.profile.profile_picture.url}}" width="152" height="152" class="rounded-circle border userimage">
+            <img src="{{user_object.profile.profile_photo.url}}" width="152" height="152" class="rounded-circle border userimage">
         </div>
         <div class="col-sm-8">
             <div style="margin-bottom: 20px;">
