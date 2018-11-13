@@ -28,6 +28,17 @@ class Post(models.Model):
     likes = models.IntegerField()
     photo_date = models.DateTimeField(auto_now_add=True, null = True)
 
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
+
+    @classmethod
+    def get_all(cls):
+       post = cls.objects.all()
+       return post
+
 class Comment(models.Model):
     text = models.TextField()
     photo = models.ForeignKey(Post, related_name='comments')

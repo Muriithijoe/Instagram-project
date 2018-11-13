@@ -12,37 +12,37 @@ def post(request):
         post = Post.objects.all()
     except DoesNotExist:
         raise Http404()
-    return render(request,"post.html", {"post":post})
-
-@login_required(login_url='/accounts/login')
-def new_post(request):
-    current_user = request.user
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.editor = current_user
-            post.save()
-        return redirect('NewsToday')
-    else:
-        form = PostForm()
-    return render(request, 'new_post.html', {"form": form})
-
-
-@login_required(login_url='/accounts/login/')
-def find(request, name):
-    results = profile.find_profile(name)
-    return render(request, 'search.html', locals())
-
-@login_required(login_url='/accounts/login/')
-def comment_on(request, post_id):
-    commentform = CommentForm()
-    post = get_object_or_404(Post, pk=post_id)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user.profile
-            comment.photo = post
-            comment.save()
-    return render(request, 'post.html', locals())
+    return render(request,"post.html")
+#
+# @login_required(login_url='/accounts/login')
+# def new_post(request):
+#     current_user = request.user
+#     if request.method == 'POST':
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.editor = current_user
+#             post.save()
+#         return redirect('NewsToday')
+#     else:
+#         form = PostForm()
+#     return render(request, 'new_post.html', {"form": form})
+#
+#
+# @login_required(login_url='/accounts/login/')
+# def find(request, name):
+#     results = profile.find_profile(name)
+#     return render(request, 'search.html', locals())
+#
+# @login_required(login_url='/accounts/login/')
+# def comment_on(request, post_id):
+#     commentform = CommentForm()
+#     post = get_object_or_404(Post, pk=post_id)
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.user = request.user.profile
+#             comment.photo = post
+#             comment.save()
+#     return render(request, 'post.html', locals())
