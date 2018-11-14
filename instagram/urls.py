@@ -5,6 +5,8 @@ from . import views
 
 urlpatterns=[
     url('^$',views.post,name = 'post'),
+    url(r'^image/(\d+)',views.image,name ='image'),
+    url(r'^profile/',views.profile,name = 'Profile'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
