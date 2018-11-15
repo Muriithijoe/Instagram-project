@@ -4,9 +4,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns=[
-    url('^$',views.post,name = 'post'),
-    url(r'^image',views.image, name = 'image'),
-    url(r'^new-image',views.new_image, name = 'new-image'),
+    url(r'^post',views.post, name = 'post'),
+    url(r'^new-post',views.new_post, name = 'new-post'),
     url(r'^profile/',views.profile,name = 'Profile'),
     url(r'^edit-profile/',views.edit_profile,name = 'edit-profile'),
     url(r'^search_profile/(\d+)',views.search_profile,name = 'search_profile'),

@@ -1,8 +1,9 @@
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
 from django.shortcuts import render,redirect
+from django.core.exceptions import ObjectDoesNotExist
 from .forms import PostForm,ProfileForm,CommentForm
-from .models import Post,profile
+from .models import Post,profile,Comment
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 
@@ -16,55 +17,55 @@ def post(request):
 
 def profile(request):
     current_user = request.user
-    image = Image.objects.filter(profile = current_user)
+    post = Post.objects.filter(profile = current_user)
 
     try:
         # profile = get_object_or_404(Profile,user=current_user)
-        profile = Profile.objects.get(user=current_user)
+        profile = profile.objects.get(user=current_user)
     except ObjectDoesNotExist:
-        return redirect('welcome')
+        return redirect('edit_profile.html')
     print(profile.bio)
     return render(request,'profile.html',{ 'profile':profile,'image':image,'current_user':current_user})
 
-def image(request,image_id):
+def post(request,image_id):
     try:
-        image = Image.objects.get(id = image_id)
+        post = Post.objects.get(id = image_id)
     except ObjectDoesNotExist:
-        raise Http404()
-    return render(request,'image.html',{'image':image})
+        return redirect('new_post.html')
+    return render(request,'post.html',{'image':image})
 
 @login_required(login_url='/accounts/login/')
-def new_image(request):
+def new_post(request):
     current_user = request.user
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit = False)
             image.profile = current_user
             image.save()
         return redirect('post')
     else:
-        form =ImageForm()
-    return render(request,'new_image.html', {'form':form})
+        form =PostForm()
+    return render(request,'new_post.html', {'form':form})
 
 def edit_profile(request):
     current_user = request.user
     if request.method == 'POST':
-        form = NewProfileForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             profile = form.save(commit = False)
             profile.profile = current_user
             profile.save()
         return redirect('profile')
     else:
-        form = NewProfileForm()
+        form = ProfileForm()
     return render(request,'edit_profile.html', {'form':form})
 
 def search_results(request):
 
     if 'profile' in request.GET and request.GET["profile"]:
         search_term = request.GET.get("profile")
-        searched_profile = Profile.search_by_username(search_term)
+        searched_profile = profile.search_by_username(search_term)
         message = f"{search_term}"
 
         return render(request, 'search.html',{"message":message,"profiles": searched_profile})
@@ -75,7 +76,7 @@ def search_results(request):
 
 def search_profile(request,profile_id):
     try :
-        profile = Profile.objects.get(id = profile_id)
+        profile = profile.objects.get(id = profile_id)
 
     except ObjectDoesNotExist:
         # raise Http404()
@@ -86,7 +87,7 @@ def search_profile(request,profile_id):
 def comment_photo(request, image_id):
     current_user = request.user
     if request.method == 'POST':
-        form = NewCommentForm(request.POST, request.FILES)
+        form = CommentForm(request.POST, request.FILES)
         image = get_object_or_404(Image, pk = image_id)
         if form.is_valid():
             comment = form.save(commit = False)
@@ -95,5 +96,5 @@ def comment_photo(request, image_id):
             comment.save()
         return redirect('comment-photo')
     else:
-        form = NewCommentForm()
+        form = CommentForm()
     return render(request,'comment.html', {'form':form})
