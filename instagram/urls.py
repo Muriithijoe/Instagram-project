@@ -7,6 +7,8 @@ urlpatterns=[
     url('^$',views.post,name = 'post'),
     url(r'^image/(\d+)',views.image,name ='image'),
     url(r'^profile/',views.profile,name = 'Profile'),
+    url(r'^edit-profile/',views.edit_profile,name = 'edit-profile'),
+    url(r'^search_profile/(\d+)',views.search_profile,name = 'search_profile'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

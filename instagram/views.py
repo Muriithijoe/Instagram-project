@@ -46,11 +46,11 @@ def search_results(request):
         searched_profile = Profile.search_by_username(search_term)
         message = f"{search_term}"
 
-        return render(request, 'all-insta/search.html',{"message":message,"profiles": searched_profile})
+        return render(request, 'search.html',{"message":message,"profiles": searched_profile})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'all-insta/search.html',{"message":message})
+        return render(request, 'search.html',{"message":message})
 
 def search_profile(request,profile_id):
     try :
@@ -58,9 +58,9 @@ def search_profile(request,profile_id):
 
     except ObjectDoesNotExist:
         # raise Http404()
-        return render(request, 'all-insta/no_profile.html')
+        return render(request, 'no_profile.html')
 
-    return render(request, 'all-insta/search_profile.html', {'profile':profile})
+    return render(request, 'search_profile.html', {'profile':profile})
 
 def comment_photo(request, image_id):
     current_user = request.user
