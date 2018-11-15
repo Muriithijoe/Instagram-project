@@ -5,7 +5,7 @@
 <div class="container">
 
   <div class="row">
-    {% for insta_item in insta %}
+    {% for insta_item in instagram %}
       <div class="col-md-7 well">
 
           <h5> <b>{{insta_item.profile}} </b></h5>
@@ -28,7 +28,7 @@
       </div>
     {% endfor%}
     <div class="col-md-3 well">
-      <a href="{%url 'new-image'%}">Upload post</a>
+      <a href="#">Upload post</a>
     </div>
   </div>
 

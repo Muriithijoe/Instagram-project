@@ -26,6 +26,27 @@ def profile(request):
     print(profile.bio)
     return render(request,'profile.html',{ 'profile':profile,'image':image,'current_user':current_user})
 
+def image(request,image_id):
+    try:
+        image = Image.objects.get(id = image_id)
+    except ObjectDoesNotExist:
+        raise Http404()
+    return render(request,'image.html',{'image':image})
+
+@login_required(login_url='/accounts/login/')
+def new_image(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit = False)
+            image.profile = current_user
+            image.save()
+        return redirect('post')
+    else:
+        form =ImageForm()
+    return render(request,'new_image.html', {'form':form})
+
 def edit_profile(request):
     current_user = request.user
     if request.method == 'POST':
