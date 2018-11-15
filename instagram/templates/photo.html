@@ -3,7 +3,7 @@
  {% block content %}
  <div class="container">
    <div class="row">
-     <h1 class="text-center">{{image.image_name}}</h1>
+     <h1 class="text-center">{{post.image_name}}</h1>
    </div>
    <hr>
 
@@ -32,14 +32,14 @@
      </div>
      <div class="col-md-8">
 
-       <p class = "text-center">{{image.image_caption}}</p>
+       <p class = "text-center">{{post.image_caption}}</p>
      </div>
      <div class="col-md-2">
      </div>
    </div>
 
 
-     <footer class="text-center">Image posted since ({{image.photo_date|timesince}})</footer>
+     <footer class="text-center">Image posted since ({{post.photo_date|timesince}})</footer>
 
  </div>
 

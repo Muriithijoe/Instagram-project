@@ -27,15 +27,15 @@ def profile(request):
     print(profile.bio)
     return render(request,'profile.html',{ 'profile':profile,'image':image,'current_user':current_user})
 
-def post(request,image_id):
+def photo(request,image_id):
     try:
         post = Post.objects.get(id = image_id)
     except ObjectDoesNotExist:
-        return redirect('new_post.html')
-    return render(request,'post.html',{'image':image})
+        return redirect('new_photo.html')
+    return render(request,'photo.html',{'photo':photo})
 
 @login_required(login_url='/accounts/login/')
-def new_post(request):
+def new_photo(request):
     current_user = request.user
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
