@@ -10,10 +10,10 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/accounts/login/')
 def post(request):
     try:
-        post = Post.objects.all()
+        posts = Post.objects.all()
     except DoesNotExist:
         raise Http404()
-    return render(request,"post.html")
+    return render(request,'post.html',{"posts":posts})
 
 def profile(request):
     current_user = request.user
@@ -35,7 +35,7 @@ def photo(request,image_id):
     return render(request,'photo.html',{'photo':photo})
 
 @login_required(login_url='/accounts/login/')
-def new_photo(request):
+def new_post(request):
     current_user = request.user
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)

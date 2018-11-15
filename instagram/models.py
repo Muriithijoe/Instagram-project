@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 # Create your models here.
 class profile(models.Model):
@@ -19,7 +20,6 @@ class profile(models.Model):
          updated = cls.objects.filter(Image_name=profile).update(name=update)
          return updated
 
-from tinymce.models import HTMLField
 class Post(models.Model):
     image = models.ImageField(upload_to = 'images/', blank = True)
     image_name = models.CharField(max_length = 30)
