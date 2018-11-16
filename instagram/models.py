@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from tinymce.models import HTMLField
 
 # Create your models here.
-class profile(models.Model):
+class Profile(models.Model):
     profile_photo = models.ImageField(upload_to = 'images/', blank = True)
     user = models.OneToOneField(User,on_delete = models.CASCADE, null = True)
     bio = models.TextField(max_length = 100)
@@ -19,6 +19,11 @@ class profile(models.Model):
     def update_profile(cls,profile,update):
          updated = cls.objects.filter(Image_name=profile).update(name=update)
          return updated
+    @classmethod
+    def search_by_username(cls,search_term):
+        instagram = cls.objects.filter(user__username=search_term)
+        return instagram
+
 
 class Post(models.Model):
     image = models.ImageField(upload_to = 'images/', blank = True)
@@ -39,7 +44,8 @@ class Post(models.Model):
        post = cls.objects.all()
        return post
 
+
 class Comment(models.Model):
     text = models.TextField()
     photo = models.ForeignKey(Post, related_name='comments')
-    user = models.ForeignKey(profile, related_name='comments')
+    user = models.ForeignKey(Profile, related_name='comments')

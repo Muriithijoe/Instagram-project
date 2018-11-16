@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, profile,Comment
+from .models import Post, Profile,Comment
 
 
 
@@ -13,7 +13,7 @@ class ProfileForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['Name'].widget=forms.TextInput()
     class Meta:
-        model = profile
+        model = Profile
         fields = ('user','profile_photo','bio' )
 
 
